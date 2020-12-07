@@ -20,7 +20,7 @@ Dk=1.96e-9; %m2/s, K+ diffusion coefficient
 zoh=-1; %--, OH- valence
 Doh=5.27e-9; %m2/s, OH- diffusion coefficient
 D=(Doh*Dk*(zoh-zk))/(Doh*zoh-Dk*zk); %m2/s, KOH electrolyte averaged diffusion coefficient
-Dm=D*0.1; %m2/s, averaged diffusion coefficient in membrane
+Dm=D*0.5; %m2/s, averaged diffusion coefficient in membrane
 Cm=5; %M, concentration of stationary fixed charges in membrane
 
 j0her=1e-3; %A/m2, exchange current density HER
@@ -49,7 +49,7 @@ R1=[S,[zeros(n-2,1);a*(1+b)]];
 % Region 3 discretisation matrix, dimensions n-1 x n:
 R3=[[a*(1-b);zeros(n-2,1)],S];
 
-d=1e6; %duration
+d=1e5; %duration
 for j=2:d %end time (total elapsed time) is d*dt seconds
 %% Make space discretisation matrix for region 2
 am=Dm*dt/dx^2;
@@ -115,7 +115,7 @@ E1=E*x(1:n);
 E3=E*x(2*n+1:3*n);
 % [~,mi]=max(Em(2:end));
 index=[j];
-tijd=[j]; %s, times correspond to index vector above
+tijd=[j*dt]; %s, times correspond to index vector above
 for t=1:length(index)
     E2(t,:)=Em(index(t))*x(n+1:2*n); %#ok<*SAGROW>
     Pot(t,:)=[E1,E2(t,:),E3]; %V
